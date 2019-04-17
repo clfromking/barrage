@@ -13,10 +13,15 @@
     width: 1000px;
     height: 600px;
     border: 1px solid seagreen;
+    margin-top: 20px;
+    position: relative;
 }
 .input{
     margin-top: 40px;
 }
 .btn{
     margin-top: 40px;
+}
+.content span{
+    position: absolute;
 }

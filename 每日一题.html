@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>每日一题</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //问： 如何判断当前脚本是运行在node.js下还是浏览器下？
+    // console.log(this === window ? 'browser' : 'node');
+    //答： 通过判断全局的global对象是否为window，在浏览器环境下，this指向window
+
+    //全局变量直接var num = 10;的this，就是指向一个空对象，此变量不属于global也不属于module.exports
+
+    //此时，打印出来的this是指向module.exports，是一个空对象，不指向global
+    //console.log(this);
+    //this.num = 10;
+    //console.log(this.num);
+    //console.log(global.num);
+    //console.log(module.exports.num)
+
+    //此时,在函数中this指向的是global，相当于给global加了一个属性，已经和全局的this无关了
+    //function fn() {
+    // this.num = 20;
+    // }
+    // fn();
+    // console.log(this);
+    // console.log(this.num);
+    // console.log(global.num);
+
+    //此时，在构造函数中this指向调用它的实例对象
+    // function Fn() {
+    //     this.num = 10;
+    // }
+    // var fn = new Fn();
+    // console.log(this);
+    // console.log(Fn.num);
+    // console.log(global.num);
+    // console.log(module.exports.num)
+
+    // 以上三种情况皆在node的环境下运行有效
+
+    
+    
+    //问： js有一个函数，执行对象查找时，永远不会去查找原型，这个函数是？
+    //答： hasOwnProperty,用来判断一个对象是否有你给出名称的属性和对象，此方法无法检查该对象原形链中是否具有该属性，该属性必须是对象本身的成员。
+
+    //问： 打印出1-100之间所有的质数  质数：只能被1和自身整除,不能被其余的数给整除
+    //答： 此方法质数中缺少一个2
+    // for(var i = 2; i <= 100; i++){
+    //     for(var j = i - 1; j > 1; j--){
+    //         if(i % j == 0){
+    //             break;
+    //         }
+    //     }
+        // 双循环，不一定所有的代码都要在小循环里，可以把特定代码放在小循环结束之后的大循环当中，让小循环遇到某种情况break，不触发特定代码即可
+    //     if(j == 1){
+    //         console.log(i);
+    //     }
+    // }
+
+    // for(var i=2 ; i<=100 ; i++){
+    //     var flag = true;
+    //     for(var j=2 ; j<i ; j++){
+    //         if(i%j == 0){
+    //             flag = false;
+    //         }
+    //     }
+    //     if(flag){
+    //             console.log(i);
+    //     }
+    // }
+
+    //问： [1,2,3].map(parseInt)得到什么？阐述原因？
+    //答： 首先数组的map方法，循环遍历每一项，可以对每一项进行操作，必须return回来，返回一个操作处理后的新数组
+    // var arr = [1,2,3];
+    // var arr1 = arr.map((item,index) => {
+    //     return item * 2
+    // })
+    // console.log(arr1) // 2 4 6
+    //并且，map还可以在参数中直接写一个js自带的方法，就不用自己写函数
+    // var arr = [1,4,9];
+    // var arr1 = arr.map(Math.sqrt); //Math.sqrt为求平方根
+    // console.log(arr1)  // 1 2 3
+    // var arr = [1,2,3];
+    // var arr1 = arr.map(parseInt);
+    // console.log(arr1)
+
+    //问： js中typeof返回哪些数据类型
+    //答： undefined  数组和对象都是object string number boolean 函数返回function
+    //symbol()是es6的返回值
+
+    // console.log(typeof(undefined))
+    // console.log(typeof(null))   object
+
+    //问： 如何打乱一个数组？
+    //答： 
+    // var arr = [1, 2, 3, 4, 5, 6, 7];
+    // var newArr = [];
+    // for(var i = 0; i<arr.length; i++){
+    //     var random = Math.floor(Math.random() * arr.length);
+    //     if(i > 0) {
+
+    //     }
+    // }
+    // console.log(arr);
+
+    //问： 数组去重？
+    //答： 
+    //方法一：indexOf寻找元素是否重复
+    // var arr = [2, 8, 5, 0, 5, 2, 6, 7, 2];
+    // var ary = []
+    // function fn1() {
+    //     for(var i = 0; i < arr.length; i++){
+    //         if(ary.indexOf(arr[i]) == -1){
+    //             ary.push(arr[i])
+    //         }else{
+    //             continue;
+    //         }
+    //     }
+    // }
+    // fn1();
+    // console.log(ary)
+    //arr.indexOf(item, start) item是要查找的元素，start是开始的索引位置，找到则返回该元素的位置，找不到返回-1
+
+    //方法二：indexOf寻找下标，下标和i不同证明前面已有此元素
+    // 在这个for循环中，i可以代表下标，在通过arr.indexOf(arr[i])寻找数组中每个元素对应的下标，若与i不等，则证明重复
+    // var arr = [2, 8, 5, 0, 5, 2, 6, 7, 2];
+    // var ary = [];
+    // for(var i = 0; i < arr.length; i++){
+    //     if(arr.indexOf(arr[i]) == i){
+    //         ary.push(arr[i]);
+    //     }else{
+    //         continue;
+    //     }
+    // }
+    // console.log(ary);
+
+    // 方法三：
+
+</script>
+</html>

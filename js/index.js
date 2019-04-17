@@ -16,10 +16,12 @@ function clickInput() {
 }
 
 function clickKey() {
-    document.onkeydown = function(e) {
+    document.onkeydown = function(evt) {
         var event = evt || window.event;
-        if(e.keyCode == 13){
-            sendBarrage();
+        if(event.keyCode == 13){
+            var e = document.createEvent('UIEvents'); //创建事件对象，代替鼠标点击
+            e.initEvent('click', true, true); //初始化事件对象，要带上事件类型
+            btn.dispatchEvent(e); //触发事件 什么元素会触发此事件
         }
     }
 }
@@ -28,6 +30,7 @@ function sendBarrage() {
     btn.onclick = function () {
         if(input.value.trim() == ''){
             alert('弹幕内容不能为空');
+            return;
         }
         var span = document.createElement('span');
         span.innerText = input.value;
@@ -42,6 +45,7 @@ function sendBarrage() {
         
         var timer = setInterval(function() {
             span.style.marginLeft = left + 'px';
+            content.appendChild(span)
             if(left > -span.offsetWidth) {
                 left -= 10;
                 span.style.marginLeft = left + 'px';
@@ -50,7 +54,6 @@ function sendBarrage() {
                 span.parentNode.removeChild(span);
             }
         }, 100)
-        content.appendChild(span)
     }
 }
 
